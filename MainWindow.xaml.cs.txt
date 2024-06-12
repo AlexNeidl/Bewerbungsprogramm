@@ -1,0 +1,123 @@
+using System;
+using System.Data;
+using System.Diagnostics;
+using System.Security.Cryptography.Pkcs;
+using System.Media;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+
+namespace Programm_Bewerbung
+{
+    public partial class MainWindow : Window
+    {
+        private bool isOpeningBracket;
+
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        private void CalculatorButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            Button? button = sender as Button;
+            if (button != null)
+            {
+                string? buttonContent = button.Content != null ? button.Content.ToString() : string.Empty;
+
+                if (buttonContent == "C")
+                {
+                    CalculatorDisplay.Text = string.Empty;
+                }
+                else if (buttonContent == ",")
+                {
+                    // Überprüfen, ob bereits ein Komma im Textfeld vorhanden ist
+                    if (!CalculatorDisplay.Text.Contains(","))
+                    {
+                        CalculatorDisplay.Text += ",";
+                    }
+                }
+                else if (buttonContent == "=")
+                {
+                    try
+                    {
+                        // Compute the expression in the display
+                        var result = new DataTable().Compute(CalculatorDisplay.Text, null);
+                        CalculatorDisplay.Text = result != null ? result.ToString() : string.Empty;
+                    }
+                    catch (Exception)
+                    {
+                        CalculatorDisplay.Text = "Error";
+                    }
+                }
+                else
+                {
+                    CalculatorDisplay.Text += buttonContent;
+                }
+            }
+
+        }
+        private void BracketButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (isOpeningBracket)
+            {
+                CalculatorDisplay.Text += "(";
+                BracketButton.Content = ")";
+            }
+            else
+            {
+                CalculatorDisplay.Text += ")";
+                BracketButton.Content = "(";
+            }
+            isOpeningBracket = !isOpeningBracket;
+
+        }
+        private void GoogleSearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            string query = GoogleSearchBox.Text;
+            if (string.IsNullOrEmpty(query))
+            {
+                MessageBox.Show("Bitte geben sie einen Suchbegriff ein", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                string url = $"https://www.google.com/search?q={Uri.EscapeDataString(query)}";
+                Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+            }
+        }
+
+        private void YoutubeSearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            string query = YoutubeSearchBox.Text;
+            if (string.IsNullOrEmpty(query))
+            {
+                MessageBox.Show("Bitte geben sie einen Suchbegriff ein", "Fehler", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                string url = $"https://www.youtube.com/results?search_query={Uri.EscapeDataString(query)}";
+                Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+
+            }
+        }
+
+        private void GoogleSearchBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                GoogleSearchButton_Click(sender, e);
+
+            }
+        }
+
+        private void YoutubeSearchBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                YoutubeSearchButton_Click(sender, e);
+
+            }
+        }
+    }
+}

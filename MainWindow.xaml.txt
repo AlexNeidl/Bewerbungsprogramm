@@ -1,0 +1,128 @@
+<Window x:Class="Programm_Bewerbung.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Programm_Bewerbung"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="950"
+        ResizeMode="NoResize" Background="Black">
+    <Window.Resources>
+        <!-- ImageBrush für Button-Hintergrund -->
+        <ImageBrush x:Key="ButtonBackgroundBrush" ImageSource="Ressources/Button.png"/>
+        <ImageBrush x:Key="ButtonMouseOver" ImageSource="Ressources/Button_MouseOver.png"/>
+        <ImageBrush x:Key="ButtonClicked" ImageSource="Ressources/Button_Clicked.png"/>
+        <!-- Style für abgerundete Buttons -->
+        <Style x:Key="RoundedButton" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Border"
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonMouseOver}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonClicked}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="{StaticResource ButtonBackgroundBrush}" />
+            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Ressources/Paper.jpg"/>
+        </Grid.Background>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="379*"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="570*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Taschenrechner (links) -->
+        <StackPanel Grid.Column="0" Grid.RowSpan="3" Margin="10,10,-5,10">
+            <StackPanel.Background>
+                <ImageBrush/>
+            </StackPanel.Background>
+            <TextBlock Text="Taschenrechner" FontWeight="Bold" FontSize="16" Margin="0,0,0,10" Foreground="Black" Width="338"/>
+            <TextBox x:Name="CalculatorDisplay" HorizontalAlignment="Stretch" Height="40" Margin="10,0,10,10" TextAlignment="Right" Background="White" Width="344" Padding="10" FontSize="16" FontWeight="Bold"/>
+            <UniformGrid Rows="5" Columns="4" Height="450" Width="348">
+                <UniformGrid.Background>
+                    <ImageBrush/>
+                </UniformGrid.Background>
+                <!-- Number and operation Buttons -->
+                <Button Content="C" Click="CalculatorButton_Click" Margin="2" FontSize="36" Style="{StaticResource RoundedButton}"/>
+                <Button x:Name="BracketButton" Content="( / )" Click="BracketButton_Click" Margin="2" FontSize="36" Style="{StaticResource RoundedButton}"/>
+                <!-- Combined Bracket button -->
+                <ContentControl Margin="2"/>
+                <ContentControl Margin="2"/>
+                <Button Content="7" Click="CalculatorButton_Click" Margin="2" FontSize="36" Style="{StaticResource RoundedButton}"/>
+                <Button Content="8" Click="CalculatorButton_Click" Margin="2" FontSize="36" Style="{StaticResource RoundedButton}"/>
+                <Button Content="9" Click="CalculatorButton_Click" Margin="2" FontSize="36" Style="{StaticResource RoundedButton}"/>
+                <Button Content="/" Click="CalculatorButton_Click" Margin="2" FontSize="36" Style="{StaticResource RoundedButton}"/>
+                <Button Content="4" Click="CalculatorButton_Click" Margin="2" FontSize="36" Style="{StaticResource RoundedButton}"/>
+                <Button Content="5" Click="CalculatorButton_Click" Margin="2" FontSize="36" Style="{StaticResource RoundedButton}"/>
+                <Button Content="6" Click="CalculatorButton_Click" Margin="2" FontSize="36" Style="{StaticResource RoundedButton}"/>
+                <Button Content="*" Click="CalculatorButton_Click" Margin="2" FontSize="36" Style="{StaticResource RoundedButton}"/>
+                <Button Content="1" Click="CalculatorButton_Click" Margin="2" FontSize="36" Style="{StaticResource RoundedButton}"/>
+                <Button Content="2" Click="CalculatorButton_Click" Margin="2" FontSize="36" Style="{StaticResource RoundedButton}"/>
+                <Button Content="3" Click="CalculatorButton_Click" Margin="2" FontSize="36" Style="{StaticResource RoundedButton}"/>
+                <Button Content="-" Click="CalculatorButton_Click" Margin="2" FontSize="36" Style="{StaticResource RoundedButton}"/>
+                <Button Content="0" Click="CalculatorButton_Click" Margin="2" FontSize="36" Style="{StaticResource RoundedButton}"/>
+                <Button Content="." Click="CalculatorButton_Click" Margin="2" FontSize="36" Style="{StaticResource RoundedButton}"/>
+                <Button Content="=" Click="CalculatorButton_Click" Margin="2" FontSize="36" Style="{StaticResource RoundedButton}"/>
+                <Button Content="+" Click="CalculatorButton_Click" Margin="2" FontSize="36" Style="{StaticResource RoundedButton}"/>
+            </UniformGrid>
+        </StackPanel>
+
+        <!-- Google Suchleiste -->
+        <StackPanel Grid.Column="1" Grid.Row="0" Margin="20,-6,0,90" Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <StackPanel.Background>
+                <ImageBrush ImageSource="/Ressources/GoogleLogo.jpg"/>
+            </StackPanel.Background>
+            <TextBox x:Name="GoogleSearchBox" HorizontalAlignment="Stretch" Height="20" Margin="10,200,10,10" TextAlignment="Left" KeyDown="GoogleSearchBox_KeyDown" Width="246"/>
+            <Button x:Name="GoogleSuche" Content="Google Suche" Click="GoogleSearchButton_Click" Margin="10,5,10,0" Width="102" Style="{StaticResource RoundedButton}" FontSize="12"/>
+        </StackPanel>
+
+        <!-- YouTube Suchleiste -->
+        <StackPanel Grid.Column="1" Grid.Row="1" Margin="20,90,0,0" Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <StackPanel.Background>
+                <ImageBrush ImageSource="/Ressources/Youtube.jpg"/>
+            </StackPanel.Background>
+            <TextBox x:Name="YoutubeSearchBox" HorizontalAlignment="Stretch" Height="20" Margin="10,210,10,10" TextAlignment="Left" Padding="0,0,0,0" KeyDown="YoutubeSearchBox_KeyDown" Width="246"/>
+            <Button x:Name="YoutubeSuche" Content="YouTube Suche" Click="YoutubeSearchButton_Click" Margin="10,5,10,0" Width="102" Style="{StaticResource RoundedButton}" FontSize="12"/>
+        </StackPanel>
+        <Image Source="Ressources/Border.png" IsHitTestVisible="False" Margin="-391,-133,-99,-137" Grid.ColumnSpan="3" Grid.RowSpan="3" OpacityMask="#FF0F0101" RenderTransformOrigin="0.5,0.5" >
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.0"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+        </Image>
+
+    </Grid>
+</Window>
